@@ -6,10 +6,10 @@ import { IconfontGlobal } from './statics/iconfont/iconfont'
 import App from './App';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <div>
     <App />
     <GlobalStyle/>
     <IconfontGlobal></IconfontGlobal>
-  </React.StrictMode>,
+  </div>,
   document.getElementById('root')
 );
