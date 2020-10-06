@@ -8,10 +8,41 @@ import {
   Nav,
   NavItem,
   NavSearch,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoItem,
+  SearchInfoList,
   SearchWrapper,
   Addition,
   Button
 } from './style'
+
+const getListArea = show => {
+  if (show) {
+    return (
+      <SearchInfo>
+        <SearchInfoTitle>
+          热门搜索
+          <SearchInfoSwitch>
+            换一批
+          </SearchInfoSwitch>
+        </SearchInfoTitle>
+        <SearchInfoList>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+        </SearchInfoList>
+      </SearchInfo>
+    )
+  } else {
+    return null
+  }
+}
 
 class Header extends Component {
   render() {
@@ -44,6 +75,7 @@ class Header extends Component {
               <i className={focused ? 'focused iconfont zoom': 'iconfont zoom'}>
                 &#xe614;
               </i>
+              {getListArea(focused)}
           </SearchWrapper>
         </Nav>
         <Addition>
