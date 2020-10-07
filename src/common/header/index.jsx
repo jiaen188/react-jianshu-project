@@ -45,7 +45,8 @@ class Header extends Component {
         <SearchInfo onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <SearchInfoTitle>
             热门搜索
-            <SearchInfoSwitch onClick={()=>handleChangePage(page, totalPage)}>
+            <SearchInfoSwitch onClick={()=>handleChangePage(page, totalPage, this.spinIcon)}>
+              <i ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
               换一批
             </SearchInfoSwitch>
           </SearchInfoTitle>
@@ -62,6 +63,7 @@ class Header extends Component {
   render() {
     const {
       focused,
+      list,
       handleInputFocus,
       handleInputBlur
     } = this.props
@@ -82,7 +84,7 @@ class Header extends Component {
               classNames="slide">
               <NavSearch
                 className={focused ? 'focused' : ''}
-                onFocus={handleInputFocus}
+                onFocus={() => handleInputFocus(list)}
                 onBlur={handleInputBlur}>
               </NavSearch>
             </CSSTransition>
@@ -116,8 +118,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleInputFocus() {
-      dispatch(actionCreators.getList())
+    handleInputFocus(list) {
+      if (!list.size) { // immutable对象的size属性
+        dispatch(actionCreators.getList())
+      }
       dispatch(actionCreators.searchFocus())
     },
     handleInputBlur() {
@@ -129,7 +133,14 @@ const mapDispatchToProps = (dispatch) => {
     handleMouseLeave() {
       dispatch(actionCreators.mouseLeave())
     },
-    handleChangePage(page, totalPage) {
+    handleChangePage(page, totalPage, spin) {
+      let originAngle = spin.style.transform.replace(/[^0-9]/ig, ''); // 获取当前的旋转角度
+			if (originAngle) {
+				originAngle = parseInt(originAngle, 10);
+			}else {
+				originAngle = 0;
+			}
+			spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)'; // 旋转角度加360
       const newPage = page < totalPage ? page + 1 : 1
       dispatch(actionCreators.changePage(newPage))
     }
