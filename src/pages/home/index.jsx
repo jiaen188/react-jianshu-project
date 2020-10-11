@@ -10,7 +10,6 @@ import {
   HomeLeft,
 	HomeRight
 } from './style';
-import axios from 'axios';
 
 class Home extends Component {
 
