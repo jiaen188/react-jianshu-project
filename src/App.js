@@ -10,15 +10,13 @@ import Header from './common/header'
 function App() {
   return (
     <Provider store={store}>
-      <div>
+      <BrowserRouter>
         <Header></Header>
-        <BrowserRouter>
         <div>
           <Route path="/" exact component={Home}></Route>
           <Route path="/detail" exact component={Detail}></Route>
         </div>
-        </BrowserRouter>
-      </div>
+      </BrowserRouter>
     </Provider>
   );
 }

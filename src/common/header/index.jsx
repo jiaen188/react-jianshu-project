@@ -1,5 +1,6 @@
-import React , {Component} from 'react'
+import React , {PureComponent} from 'react'
 import { CSSTransition } from 'react-transition-group'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { actionCreators } from './store';
 import {
@@ -18,7 +19,7 @@ import {
   Button
 } from './style'
 
-class Header extends Component {
+class Header extends PureComponent {
 
   getListArea = () => {
     const {
@@ -69,7 +70,9 @@ class Header extends Component {
     } = this.props
     return (
       <HeaderWrapper>
-        <Logo/>
+        <Link to='/'>
+					<Logo/>
+				</Link>
         <Nav>
           <NavItem className='left active'>首页</NavItem>
           <NavItem className='left'>下载App</NavItem>
