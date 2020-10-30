@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { actionCreators } from './store';
+import { actionCreators as loginActionCreators } from '../../pages/login/store'
 import {
   HeaderWrapper,
   Logo,
@@ -66,7 +67,9 @@ class Header extends PureComponent {
       focused,
       list,
       handleInputFocus,
-      handleInputBlur
+      handleInputBlur,
+      login,
+      logout
     } = this.props
     return (
       <HeaderWrapper>
@@ -76,7 +79,9 @@ class Header extends PureComponent {
         <Nav>
           <NavItem className='left active'>首页</NavItem>
           <NavItem className='left'>下载App</NavItem>
-          <NavItem className='right'>登陆</NavItem>
+          {
+            login ? <NavItem className='right' onClick={logout}>退出</NavItem> : <Link to='/login'><NavItem className='right'>登陆</NavItem></Link> 
+          }
           <NavItem className='right'>
             <i className="iconfont">&#xe636;</i>
           </NavItem>
@@ -115,7 +120,8 @@ const mapStateToProps = (state) => {
     list: state.getIn(['header', 'list']),
     page: state.getIn(['header', 'page']),
     mouseIn: state.getIn(['header', 'mouseIn']),
-    totalPage: state.getIn(['header', 'totalPage'])
+    totalPage: state.getIn(['header', 'totalPage']),
+    login: state.getIn(['login', 'login'])
   }
 }
 
@@ -146,6 +152,9 @@ const mapDispatchToProps = (dispatch) => {
 			spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)'; // 旋转角度加360
       const newPage = page < totalPage ? page + 1 : 1
       dispatch(actionCreators.changePage(newPage))
+    },
+    logout() {
+      dispatch(loginActionCreators.logout())
     }
   }
 }
